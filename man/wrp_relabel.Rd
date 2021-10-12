@@ -4,12 +4,14 @@
 \alias{wrp_relabel}
 \title{Relabel}
 \usage{
-wrp_relabel(wrp_con, ...)
+wrp_relabel(wrp_con, ..., .l = NULL)
 }
 \arguments{
 \item{wrp_con}{\link{wrp_connect} object.}
 
 \item{...}{Named parameters of label names to values.}
+
+\item{.l}{Named parameters passed as a list.}
 }
 \description{
 Modifies the labels of a Geo Time Series™.

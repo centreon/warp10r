@@ -132,10 +132,16 @@ test_that("relabel work as expected", {
     as_gts(df, labels = c(star = "treck", "next" = "generation", heckle = "jeckle")),
     as_gts(df, labels = c(star = "treck")),
     as_gts(df, labels = c(bar = "foo", foo = "bar")),
+    as_gts(df, labels = c(bar = "foo")),
+    as_gts(df, labels = c(bar = "foo", foo = "bar")),
     as_gts(df)
   )
   res_relabel <- wrp_connect() %>%
     wrp_new_gts() %>%
+    wrp_clone() %>%
+    wrp_relabel("null" = NULL, foo = "bar", .l = list(bar = "foo")) %>%
+    wrp_clone() %>%
+    wrp_relabel(.l = list("null" = NULL, bar = "foo")) %>%
     wrp_clone() %>%
     wrp_relabel(foo = "bar", bar = "foo") %>%
     wrp_clone() %>%

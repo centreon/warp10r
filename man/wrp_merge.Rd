@@ -27,6 +27,7 @@ wrp_connect() \%>\%
   wrp_new_gts() \%>\% wrp_rename("b") \%>\%
   wrp_relabel(label3 = "bar") \%>\%
   wrp_add_value_df(data.frame(tick = c(1, 7:10), value = c(2, 3, 4, 4, 4))) \%>\%
+  wrp_to_list(2) \%>\%
   wrp_merge() \%>\%
   wrp_exec()
 }

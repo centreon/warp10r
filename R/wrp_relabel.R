@@ -11,6 +11,7 @@
 #'
 #' @inheritParams documentation
 #' @param ... Named parameters of label names to values.
+#' @param .l Named parameters passed as a list.
 #'
 #' @examples
 #'
@@ -31,8 +32,8 @@
 #'
 #' @seealso [wrp_set_attributes()], [wrp_rename()]
 #'
-wrp_relabel <- function(wrp_con, ...) {
-  labels <- rlang::list2(...)
+wrp_relabel <- function(wrp_con, ..., .l = NULL) {
+  labels <- c(rlang::list2(...), .l)
   script <- paste(sanitize(as.list(labels)), "RELABEL")
   return_object  <- list(
     gts      = "gts",
