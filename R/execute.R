@@ -3,15 +3,25 @@
 #' Execute the Warp Script by sending it to the server.
 #'
 #' @inheritParams documentation
+#' @param retry If the script fails, retry it n times.
 #'
 #' @export
 #'
-wrp_exec <- function(wrp_con) {
+wrp_exec <- function(wrp_con, retry = 0) {
   wrp_script <- wrp_con$get_script()
   endpoint   <- wrp_con$get_endpoint()
   stack      <- get_stack(wrp_con)
-  raw_res    <- post_warpscript(warpscript = wrp_script, endpoint = endpoint)
   tz         <- wrp_con$get_tz()
+  raw_res    <- tryCatch(
+    post_warpscript(warpscript = wrp_script, endpoint = endpoint),
+    error = function(e) {
+      if (retry > 0) {
+        Sys.sleep(3)
+        return(wrp_exec(wrp_con, retry = retry - 1))
+      }
+      stop(e)
+    }
+  )
 
   # Clear all scripts
   clear_script(wrp_con)
@@ -23,7 +33,7 @@ wrp_exec <- function(wrp_con) {
 
   res <- jsonlite::fromJSON(raw_res, simplifyVector = FALSE)
   if (length(res) != length(stack)) {
-    msg <- glue::glue("Number of elements declared in the stack ({length(stack)}) does not match the number of fetched data ({length(res)}).")
+    msg <- glue::glue("Number of elements declared in the stack ({length(stack)}) does not match the number of fetched data ({length(res)}).") # nolint
     stop(msg)
   }
   res <- purrr::map2(rev(stack), res, function(class, x) {

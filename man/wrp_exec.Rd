@@ -4,10 +4,12 @@
 \alias{wrp_exec}
 \title{Execute Warp Script}
 \usage{
-wrp_exec(wrp_con)
+wrp_exec(wrp_con, retry = 0)
 }
 \arguments{
 \item{wrp_con}{\link{wrp_connect} object.}
+
+\item{retry}{If the script fails, retry it n times.}
 }
 \description{
 Execute the Warp Script by sending it to the server.
