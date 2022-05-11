@@ -14,6 +14,7 @@ Check that endpoint is available.
 }
 \seealso{
 Other assert: 
+\code{\link{assert_labels}()},
 \code{\link{assert_token}()}
 }
 \concept{assert}

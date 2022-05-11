@@ -36,3 +36,42 @@ assert_token <- function(token) {
     )
   }
 }
+
+
+#' Assert Labels
+#'
+#' Check that labels are constructed correctly.
+#'
+#' @family assert
+#'
+#' @param labels A list of labels to be used in the query.
+#'
+#' @return A list of labels or NULL.
+#'
+assert_labels <- function(labels) {
+  if (is.null(labels)) {
+    return(NULL)
+  }
+  if (!is.list(labels) && !is.character(labels)) {
+    stop(
+      paste(
+        "Labels must be a list of strings, not a ", typeof(labels)
+      )
+    )
+  }
+  if (length(nchar(names(labels))) == 0 || any(nchar(names(labels)) == 0)) {
+    stop(
+      paste(
+        "Labels must be a named list."
+      )
+    )
+  }
+  if (any(sapply(labels, length) != 1)) {
+    stop(
+      paste(
+        "Labels must be a list of strings with length 1."
+      )
+    )
+  }
+  return(lapply(labels, as.character))
+}
