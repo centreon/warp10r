@@ -41,6 +41,7 @@
 #'
 wrp_find_stats <- function(wrp_con, class = "~.*", labels = NULL) {
   assert_token(wrp_con$get_token())
+  labels <- assert_labels(labels)
   params <- sanitize(list("ws:$token", class, labels %||% "ws:{}"))
   add_stack(wrp_con, paste(params, "FINDSTATS"), "map")
 }

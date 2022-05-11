@@ -49,6 +49,7 @@
 wrp_fetch <- function(wrp_con, class = "~.*", labels = NULL, end = "ws:NOW", start = NULL, count = NULL,
                       timespan = NULL, selector = NULL, selectors = NULL, type = NULL) {
     assert_token(wrp_con$get_token())
+    labels <- assert_labels(labels)
     if (is.null(start) && is.null(timespan) && is.null(count)) count <- 1
     available_types <- c("LONG", "DOUBLE", "BOOLEAN", "STRING")
     if (!is.null(type) && !type %in% available_types) {
