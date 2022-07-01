@@ -83,6 +83,10 @@ sanitize.character <- function(x, return = "iso8601", ...) {
   if (length(only_num) == length(x)) {
     return(glue::glue("'{x}'"))
   }
+  # Some uuids can start with a number and can be mistaken with dates.
+  if (grepl("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", x)) {
+    return(glue::glue("'{x}'"))
+  }
   timestamp <- anytime::anytime(x, asUTC = TRUE, tz = "UTC")
   if (!any(is.na(timestamp))) {
     return(sanitize(timestamp, return = return))

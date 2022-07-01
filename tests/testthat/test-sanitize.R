@@ -30,3 +30,8 @@ test_that("sanitize data.frame", {
 test_that("sanitize with no arguments", {
   expect_equal(sanitize(), "")
 })
+
+test_that("sanitize uuid", {
+  uuid <- "4d2b2990-ad68-4e78-ad28-1db32b0c255c"
+  expect_equal(sanitize(uuid), glue::glue("'{uuid}'"))
+})
