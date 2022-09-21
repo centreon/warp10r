@@ -11,7 +11,11 @@
 #' @export
 #'
 run_macro <- function(wrp_con, macro, return_object = NULL, ..., .eval = FALSE) {
-  script <- sanitize(...)
+  params <- list(...)
+  script <- ""
+  if (length(params) > 0) {
+    script <- sanitize(params)
+  }
   if (.eval) {
     macro <- glue::glue("${macro} EVAL")
   }
