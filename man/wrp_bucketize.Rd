@@ -6,8 +6,8 @@
 \usage{
 wrp_bucketize(
   wrp_con,
-  bucketizer = c("and", "count", "first", "join", "last", "max", "mean",
-    "mean.circular", "mean.circular.exclude-nulls", "median", "min", "or", "sum"),
+  bucketizer = c("and", "count", "first", "join", "last", "max", "mean", "mean.circular",
+    "mean.circular.exclude-nulls", "median", "min", "or", "sum"),
   last = 0,
   span = 0,
   count = 0
