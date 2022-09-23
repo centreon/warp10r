@@ -4,3 +4,4 @@
 ^.lintr$
 ^.pre-commit-config.yaml$
 ^LICENSE\.md$
+^.vscode
