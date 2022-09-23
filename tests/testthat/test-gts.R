@@ -49,6 +49,21 @@ test_that("possibility to create and retrieve GTS with some values", {
   expect_equal(as.data.frame(gts2), as.data.frame(as_gts(df2)))
 })
 
+test_that("retrieve a GTS with some NaN values", {
+  con <- wrp_connect()
+  df  <- tibble::tibble(
+    timestamp = c(1, 2),
+    value     = c(1.1, NA)
+  )
+  gts <- con %>%
+    wrp_new_gts() %>%
+    wrp_add_value_df(df, tick = "timestamp") %>%
+    wrp_exec()
+  # NaN not supported for LONG value in warpscript
+  # Could not expect_identical with FLOAT value
+  expect_equal(gts, as_gts(df))
+})
+
 test_that("bucketize works as expected", {
   con  <- wrp_connect()
   n    <- 4

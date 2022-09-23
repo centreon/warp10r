@@ -79,8 +79,12 @@ build_gts_value <- function(data) {
   }
   tibble::as_tibble(
     stats::setNames(
-      object = lapply(seq_len(n), function(i) sapply(l, `[[`, i)),
-      nm = colnames
+    object = lapply(seq_len(n), function(i) {
+      sapply(l, function(x) {
+        ifelse(is.null(x[[i]]), NA, x[[i]])
+      })
+    }),
+    nm = colnames
     )
   )
 }
