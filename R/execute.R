@@ -19,7 +19,7 @@ wrp_exec <- function(wrp_con, retry = 0) {
         Sys.sleep(3)
         return(wrp_exec(wrp_con, retry = retry - 1))
       }
-      stop(e)
+      stop(wrp_script, e)
     }
   )
 
@@ -34,7 +34,12 @@ wrp_exec <- function(wrp_con, retry = 0) {
   res <- jsonlite::fromJSON(raw_res, simplifyVector = FALSE)
   if (length(res) != length(stack)) {
     msg <- glue::glue("Number of elements declared in the stack ({length(stack)}) does not match the number of fetched data ({length(res)}).") # nolint
-    stop(msg)
+    stop(
+      msg, "\n\n",
+      "Stack: ", toString(stack), "\n\n",
+      "Fetched data: ", toString(res), "\n\n",
+      "WarpScript:\n", wrp_script
+    )
   }
   res <- purrr::map2(rev(stack), res, function(class, x) {
     if (!is.null(x)) {
