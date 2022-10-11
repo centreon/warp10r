@@ -20,6 +20,6 @@ load_file <- function(wrp_con, file, ...,
         wrp_store(param)
     }
   }
-  script <- readLines(file)
+  script <- paste(readLines(file), collapse = "\n")
   add_stack(wrp_con, script, return_object)
 }
