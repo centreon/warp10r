@@ -18,7 +18,7 @@ load_file <- function(wrp_con, file, ...,
   }
   if (length(params) > 0) {
     for (param in names(params)) {
-      wrp_store(wrp_con, .value = sanitize(params[[param]]), .symbol = param)
+      wrp_store(wrp_con, .value = params[[param]], .symbol = param)
     }
   }
   script <- paste(readLines(file), collapse = "\n")

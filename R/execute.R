@@ -111,7 +111,7 @@ build_res.lastactivity <- function(data, tz, ...) {
 #' @export
 #' @rdname build_res
 build_res.list <- function(data, tz, ...) {
-  if (all(sapply(data, length) == 1)) {
+  if (all(sapply(data, length) == 1) && all(typeof(data[[1]]) == sapply(data, typeof))) {
     unclass(unlist(data))
   } else {
     unclass(data)

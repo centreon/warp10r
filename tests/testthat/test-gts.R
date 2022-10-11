@@ -613,7 +613,7 @@ test_that("swap", {
 })
 
 test_that("to_list", {
-  expected <- c("el1", "TRUE", "el4", "4")
+  expected <- list("el1", TRUE, "el4", 4)
   object <- wrp_connect() %>%
     set_script("el1") %>%
     set_script(TRUE) %>%
