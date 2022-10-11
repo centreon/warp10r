@@ -16,21 +16,20 @@
 #'
 set_script <- function(wrp_con, script = "", consume = NULL, add = "auto") {
   # For compatibility reasons
-  if (!is.null(add) && length(add) == 1 && add == "auto") {
+  if (is_auto(add)) {
     cl <- class(script)
-    if (length(script) == 1 & cl != "list") {
+    if (is_not_list(script, cl)) {
       if (cl == "character") {
         add <- "string"
-      } else if (cl == "numeric" | cl == "integer") {
+      } else if (is_numeric(cl)) {
         add <- "numeric"
       }
-    }
-    else {
+    } else {
       script <- as.list(script)
-      if (is.null(names(script)) || any(names(script) == "")) {
-        add <- "list"
-      } else {
+      if (is_named_list(script)) {
         add <- "map"
+      } else {
+        add <- "list"
       }
     }
     script <- sanitize(script)
@@ -38,4 +37,20 @@ set_script <- function(wrp_con, script = "", consume = NULL, add = "auto") {
   wrp_con$set_script(script)
   wrp_con$add_stack(add, consume)
   wrp_con
+}
+
+is_auto <- function(add) {
+  !is.null(add) && length(add) == 1 && add == "auto"
+}
+
+is_not_list <- function(script, cl) {
+  length(script) == 1 && cl != "list"
+}
+
+is_numeric <- function(cl) {
+  cl == "numeric" || cl == "integer"
+}
+
+is_named_list <- function(script) {
+  !is.null(names(script)) && all(names(script) != "")
 }
