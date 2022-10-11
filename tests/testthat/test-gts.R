@@ -178,6 +178,23 @@ test_that("store work as expected", {
     wrp_store("foo") %>%
     wrp_exec()
   expect_equal(res, res_store)
+  res_store <- wrp_connect() %>%
+    set_script("foo") %>%
+    wrp_store(value = 42) %>%
+    set_script("$foo", add = "numeric") %>%
+    wrp_exec()
+  expect_equal(res_store, 42)
+  res_store <- wrp_connect() %>%
+    set_script("42 'foo'", add = list("string", "long")) %>%
+    wrp_store() %>%
+    set_script("$foo", add = "numeric") %>%
+    wrp_exec()
+  expect_equal(res_store, 42)
+  res_store <- wrp_connect() %>%
+    wrp_store("foo", 42) %>%
+    set_script("$foo", add = "numeric") %>%
+    wrp_exec()
+  expect_equal(res_store, 42)
 })
 
 test_that("drop work as expected", {

@@ -10,13 +10,13 @@
 #' @export
 #'
 load_file <- function(wrp_con, file, ...,
-                      return_object = list(NULL, "list", "map", "character", "numeric", "gts", "lgts")) {
+                      return_object = list(NULL, "list", "map", "string", "numeric", "gts", "lgts")) {
   params <- rlang::list2(...)
   return_object <- match.arg(return_object, several.ok = TRUE)
   if (length(params) > 0) {
     for (param in names(params)) {
       wrp_con %>%
-        set_script(params[[param]], add = "character") %>%
+        set_script(sanitize(params[[param]]), add = "string") %>%
         wrp_store(param)
     }
   }
