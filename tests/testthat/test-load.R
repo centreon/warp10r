@@ -8,3 +8,14 @@ test_that("load a file", {
     list(c(2, 3), 1)
   )
 })
+
+test_that("load an empty file", {
+  file <- tempfile()
+  writeLines("", file)
+  expect_equal(
+    wrp_connect() %>%
+      load_file(file) %>%
+      wrp_exec(),
+    list()
+  )
+})

@@ -4,14 +4,16 @@
 \alias{wrp_store}
 \title{Store}
 \usage{
-wrp_store(wrp_con, symbol = NULL, value = NULL)
+wrp_store(wrp_con, .symbol = NULL, .value = NULL, ...)
 }
 \arguments{
 \item{wrp_con}{\link{wrp_connect} object.}
 
-\item{symbol}{Name of the symbol to modify.}
+\item{.symbol}{Name of the symbol to modify.}
 
-\item{value}{Value to store under symbol.}
+\item{.value}{Value to store under symbol.}
+
+\item{...}{named arguments that can be used to store the value into its name.}
 }
 \description{
 The STORE function stores a value in a symbol.

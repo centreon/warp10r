@@ -8,7 +8,7 @@ load_file(
   wrp_con,
   file,
   ...,
-  return_object = list(NULL, "list", "map", "character", "numeric", "gts", "lgts")
+  return_object = c("none", "list", "map", "string", "numeric", "gts", "lgts")
 )
 }
 \arguments{

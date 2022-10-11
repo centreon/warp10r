@@ -10,14 +10,15 @@
 #' @export
 #'
 load_file <- function(wrp_con, file, ...,
-                      return_object = list(NULL, "list", "map", "string", "numeric", "gts", "lgts")) {
+                      return_object = c("none", "list", "map", "string", "numeric", "gts", "lgts")) {
   params <- rlang::list2(...)
   return_object <- match.arg(return_object, several.ok = TRUE)
+  if (return_object[1] == "none") {
+    return_object <- list()
+  }
   if (length(params) > 0) {
     for (param in names(params)) {
-      wrp_con %>%
-        set_script(sanitize(params[[param]]), add = "string") %>%
-        wrp_store(param)
+      wrp_store(wrp_con, .value = sanitize(params[[param]]), .symbol = param)
     }
   }
   script <- paste(readLines(file), collapse = "\n")
