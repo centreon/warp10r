@@ -13,3 +13,10 @@ test_that("Retry works", {
   end <- Sys.time()
   testthat::expect_gte(as.numeric(end - start, units = "secs"), 3)
 })
+
+test_that("Unsanitize object", {
+  res <- wrp_connect() %>%
+    set_script("2 {}", add = c("numeric", "map")) %>%
+    wrp_exec()
+  expect_equal(res, list(structure(list(), .Names = character(0)), 2))
+})
